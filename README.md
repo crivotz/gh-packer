@@ -1,8 +1,8 @@
-Install or remove ALL extensions from ~/.gh-packer file
-Example: gh packer -i
-Example: gh packer -r
+Install or remove ALL extensions from ~/.gh-packer file  
+Example: `gh packer -i`  
+Example: `gh packer -r`  
   
-.gh-packer example
+`.gh-packer` example
 ```
 dvlhdr/gh-prs
 sheepla/gh-userfetch
