@@ -5,19 +5,19 @@ filename="/home/$(whoami)/.gh-packer"
 
 help() {
   cat <<EOF
-  Usage: Install or remove ALL extensions from .gh-packer
-  Example: gh packer -i
-  Example: gh packer -r
+  Install and remove extensions from ~/.gh-packer file  
+  Example: `gh packer -i` Install missed extensions    
+  Example: `gh packer -r` Remove all extensions  
 EOF
 }
 
 
-full_install() {
+install_extension() {
   echo Install...
   while read p; do
-    gh extension install "$p"
+    (gh extension list | grep "$p") &>/dev/null || gh extension install "$p"
   done < "$filename"
-  echo Done
+  printf "\033[0;32m✓\033[0m Done\n"
 }
 
 full_remove() {
@@ -25,7 +25,7 @@ full_remove() {
   while read p; do
     gh extension remove "$p"
   done < "$filename"
-  echo Done
+  printf "\033[0;32m✓\033[0m Done\n"
 }
 
 while [ $# -gt 0 ]; do
@@ -35,7 +35,7 @@ while [ $# -gt 0 ]; do
       exit 0
       ;;
     -i)
-      full_install
+      install_extension
       exit 0
       ;;
     -r)
