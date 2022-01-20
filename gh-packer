@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -e
+
+filename="/home/$(whoami)/.gh-packer"
+
+help() {
+  cat <<EOF
+  Usage: Install or remove ALL extensions from .gh-packer
+  Example: gh packer -i
+  Example: gh packer -r
+EOF
+}
+
+
+full_install() {
+  echo Install...
+  while read p; do
+    gh extension install "$p"
+  done < "$filename"
+  echo Done
+}
+
+full_remove() {
+  echo Remove...
+  while read p; do
+    gh extension remove "$p"
+  done < "$filename"
+  echo Done
+}
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h|--help)
+      help
+      exit 0
+      ;;
+    -i)
+      full_install
+      exit 0
+      ;;
+    -r)
+      full_remove
+      exit 0
+      ;;
+    *)
+  esac
+  shift
+done
+
+help
+exit 0
